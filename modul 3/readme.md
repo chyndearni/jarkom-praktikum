@@ -116,6 +116,6 @@ Dari praktikum ini dapat disimpulkan bahwa:
 
 ## 6. Daftar Pustaka
 
-- Modul Praktikum Jaringan Komputer
-- Wireshark Documentation
-- Kurose & Ross
+- Kurose, J.F., & Ross, K.W. (2021). Computer Networking: A Top-Down Approach, 8th Edition. Pearson.
+- Universitas Telkom. (2026). Modul Praktikum Jaringan Komputer Semester Genap 2025/2026. Fakultas Informatika.
+- Wireshark Foundation. (2024). Wireshark User's Guide. Retrieved from https://www.wireshark.org/docs/
