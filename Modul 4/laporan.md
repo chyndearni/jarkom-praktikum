@@ -177,7 +177,7 @@ ip.addr == 10.217.1.191 && dns
 ```
 
 **Hasil Capture:**
-![Wireshark capture](assets/6.png)
+![Wireshark capture](assets/7.png)
 
 ```text
 Frame 1207
