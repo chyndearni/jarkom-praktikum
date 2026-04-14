@@ -23,7 +23,7 @@ nslookup www.mit.edu
 ```
 
 **Hasil:**
-![Hasil nslookup www.mit.edu](assets/1.jpg)
+![Hasil nslookup www.mit.edu](assets/1.png)
 
 ```text
 Server:  tusbind.ac.id
@@ -53,7 +53,7 @@ nslookup -type=NS mit.edu
 ```
 
 **Hasil:**
-![Hasil nslookup NS record](assets/2.jpg)
+![Hasil nslookup NS record](assets/2.png)
 
 ```text
 Server:  UnKnown
@@ -84,7 +84,7 @@ nslookup -type=MX harvard.edu
 ```
 
 **Hasil:**
-![Hasil nslookup MX record](assets/3.jpg)
+![Hasil nslookup MX record](assets/3.png)
 
 ```text
 Server:  tusbind.ac.id
@@ -105,7 +105,7 @@ harvard.edu   MX preference = 100, mail exchanger = mx0a-00171101.pphosted.com
 
 ### 4.3.1 Hasil `ipconfig /all`
 **Hasil:**
-![Hasil ipconfig all](assets/4.jpg)
+![Hasil ipconfig all](assets/4.png)
 
 ```text
 Host Name  . . . . . . . . : lawraa
@@ -127,7 +127,7 @@ Wireless LAN adapter Wi-Fi:
 
 ### 4.3.2 Hasil `ipconfig /displaydns`
 **Hasil:**
-![Hasil displaydns](assets/5.jpg)
+![Hasil displaydns](assets/5.png)
 
 ```text
 Contoh Adobe:
@@ -177,7 +177,7 @@ ip.addr == 10.217.1.191 && dns
 ```
 
 **Hasil Capture:**
-![Wireshark capture](assets/6.jpg)
+![Wireshark capture](assets/6.png)
 
 ```text
 Frame 1207
