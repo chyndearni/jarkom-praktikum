@@ -157,6 +157,8 @@ ipconfig /flushdns
 ```
 
 **Hasil:**
+![ipconfig /flushdns](assets/6.png)
+
 ```text
 Windows IP Configuration
 Successfully flushed the DNS Resolver Cache.
