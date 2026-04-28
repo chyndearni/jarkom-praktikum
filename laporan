@@ -1,0 +1,299 @@
+# Laporan Praktikum Jaringan Komputer – Modul 5
+
+## User Datagram Protocol (UDP)
+
+---
+
+## Identitas Praktikan
+
+| Item  | Keterangan       |
+| ----- | ---------------- |
+| Nama  | Laura Chyndearni Saragih|
+| NIM   | 103072400049     |
+| Kelas | IF-04-01         |
+
+---
+
+## 5.1 Tujuan Praktikum
+
+1. Menginvestigasi cara kerja protokol UDP menggunakan Wireshark
+2. Mengidentifikasi struktur header UDP dan field-fieldnya
+3. Menganalisis hubungan port source–destination pada komunikasi UDP
+4. Menghitung kapasitas maksimum payload UDP
+
+---
+
+## 5.2 Langkah Kerja dan Hasil
+
+### 5.2.1 Capture Paket UDP
+
+Langkah-langkah praktikum:
+
+1. Membuka aplikasi Wireshark
+2. Memilih interface jaringan aktif (Wi-Fi)
+3. Menjalankan perintah berikut pada Command Prompt:
+
+```bash
+ipconfig /flushdns
+nslookup google.com
+```
+
+4. Menghentikan proses capture
+5. Menggunakan filter:
+
+```bash
+udp && dns
+```
+
+Hasil capture menunjukkan paket DNS Query dan DNS Response untuk domain:
+
+```
+www.google-analytics.com
+```
+
+Berikut tampilan hasil capture paket UDP pada Wireshark (assets/assetsdns_capture.png):
+
+![DNS Capture](assets/assetsdns_capture.png)
+
+---
+
+### DNS Query (Request)
+
+Informasi paket DNS Request:
+
+* Frame: 105
+* Source Port: 63369
+* Destination Port: 53
+* Length: 50 byte
+
+Berikut tampilan paket DNS Request (assets/assetsreq.png):
+
+![DNS Request](assets/assetsreq.png)
+
+---
+
+### DNS Response
+
+Informasi paket DNS Response:
+
+* Frame: 108
+* Source Port: 53
+* Destination Port: 63369
+* Length: 136 byte
+
+Berikut tampilan paket DNS Response (assets/assetsres.png):
+
+![DNS Response](assets/assetsres.png)
+
+---
+
+### 5.2.2 Analisis Header UDP
+
+Header UDP terdiri dari 4 field utama:
+
+```
+Source Port | Destination Port | Length | Checksum
+```
+
+Setiap field memiliki ukuran:
+
+```
+2 byte
+```
+
+Total ukuran header UDP:
+
+```
+8 byte
+```
+
+Hasil analisis header UDP:
+
+| Field            | Query   | Response |
+| ---------------- | ------- | -------- |
+| Source Port      | 63369   | 53       |
+| Destination Port | 53      | 63369    |
+| Length           | 50 byte | 136 byte |
+| Checksum         | 0x1dbb  | 0xdfce   |
+
+Perhitungan payload:
+
+Payload Query:
+
+```
+50 − 8 = 42 byte
+```
+
+Payload Response:
+
+```
+136 − 8 = 128 byte
+```
+
+---
+
+### 5.2.3 Protocol UDP pada IP Header
+
+Protocol UDP memiliki nomor:
+
+```
+17 (0x11)
+```
+
+Berikut tampilan Protocol UDP pada IP Header (assets/assetsip_protocol_udp.png):
+
+![Protocol UDP](assets/assetsip_protocol_udp.png)
+
+---
+
+### 5.2.4 Perhitungan Teknis UDP
+
+| Parameter               | Nilai       |
+| ----------------------- | ----------- |
+| Jumlah field header UDP | 4           |
+| Ukuran header UDP       | 8 byte      |
+| Maksimum panjang UDP    | 65.535 byte |
+| Maksimum payload UDP    | 65.527 byte |
+| Rentang port UDP        | 0 – 65.535  |
+| Protocol number UDP     | 17 (0x11)   |
+
+---
+
+### 5.2.5 Hubungan Port Request–Response
+
+Hasil capture menunjukkan:
+
+```
+Request  : 63369 → 53
+Response : 53 → 63369
+```
+
+Artinya:
+
+* Port source pada request menjadi destination pada response
+* Port destination pada request menjadi source pada response
+* Menunjukkan pola komunikasi client–server pada protokol UDP
+
+---
+
+## 5.3 Jawaban Pertanyaan Modul
+
+**1. Jumlah field pada header UDP**
+
+Header UDP terdiri dari:
+
+* Source Port
+* Destination Port
+* Length
+* Checksum
+
+Total:
+
+```
+4 field
+```
+
+---
+
+**2. Panjang masing-masing field header UDP**
+
+Setiap field memiliki panjang:
+
+```
+2 byte
+```
+
+Total header UDP:
+
+```
+8 byte
+```
+
+---
+
+**3. Nilai field Length menyatakan**
+
+Field Length menyatakan ukuran total segmen UDP:
+
+```
+Header + Payload
+```
+
+Contoh hasil capture:
+
+```
+50 byte = 8 byte header + 42 byte payload
+136 byte = 8 byte header + 128 byte payload
+```
+
+---
+
+**4. Jumlah maksimum payload UDP**
+
+Karena field Length berukuran 16-bit:
+
+```
+2¹⁶ − 1 = 65.535 byte
+```
+
+Payload maksimum:
+
+```
+65.535 − 8 = 65.527 byte
+```
+
+---
+
+**5. Nomor port terbesar yang dapat menjadi source port**
+
+Rentang port UDP:
+
+```
+0 – 65.535
+```
+
+Nilai maksimum:
+
+```
+65.535
+```
+
+---
+
+**6. Nomor protokol UDP**
+
+Protocol UDP pada IP header:
+
+```
+Decimal : 17
+Hex     : 0x11
+```
+
+---
+
+**7. Hubungan nomor port pada pasangan paket UDP**
+
+Hasil capture menunjukkan:
+
+```
+Request  : 63369 → 53
+Response : 53 → 63369
+```
+
+Artinya:
+
+* Source request menjadi destination response
+* Destination request menjadi source response
+* Menunjukkan komunikasi client–server pada UDP
+
+---
+
+## 5.4 Kesimpulan
+
+1. Header UDP terdiri dari 4 field dengan total ukuran 8 byte
+2. Field Length menunjukkan ukuran header dan payload
+3. Payload maksimum UDP adalah 65.527 byte
+4. Rentang port UDP adalah 0–65.535
+5. Protocol number UDP adalah 17 (0x11)
+6. Komunikasi UDP menggunakan pertukaran port antara request dan response
+7. Wireshark mempermudah analisis struktur header UDP secara langsung
