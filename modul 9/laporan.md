@@ -8,7 +8,7 @@
 
 | Item  | Keterangan       |
 | ----- | ---------------- |
-| Nama  | Laura Chyndearni |
+| Nama  | Laura Chyndearni Saragih |
 | NIM   | 103072400049     |
 | Kelas | IF-04-01         |
 
