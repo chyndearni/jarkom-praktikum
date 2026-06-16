@@ -1,26 +1,55 @@
-# Modul 14 – IEEE 802.11 (WiFi)
+# Laporan Praktikum Jaringan Komputer – IEEE 802.11 (WiFi)
 
-## Nama Praktikum
-Analisis Frame IEEE 802.11 Menggunakan Wireshark
+| Item | Keterangan |
+|------|-----------|
+| Nama | Laura Chyndearni Saragih |
+| NIM | 103072400049 |
+| Kelas | IF-04-01 |
 
-## Tujuan
-1. Mengidentifikasi jenis-jenis frame pada protokol IEEE 802.11.
-2. Menganalisis Beacon Frame pada jaringan WiFi.
-3. Mengamati proses Association Request dan Association Response.
-4. Mengidentifikasi Data Frame pada jaringan IEEE 802.11.
-5. Memahami proses komunikasi antara Station (STA) dan Access Point (AP).
+---
+
+## Tujuan Praktikum
+
+1. Mengamati Beacon Frame pada jaringan IEEE 802.11.
+2. Menganalisis proses Association Request.
+3. Menganalisis proses Association Response.
+4. Mengamati Data Frame pada jaringan WiFi.
+5. Memahami proses komunikasi antara Station dan Access Point.
 
 ---
 
 ## Langkah Praktikum
 
-### 1. Membuka File Capture IEEE 802.11
+1. Membuka file capture `Wireshark_802_11.pcap` menggunakan Wireshark.
+2. Mengamati Beacon Frame menggunakan filter:
 
-File capture `Wireshark_802_11.pcap` dibuka menggunakan Wireshark. Capture tersebut berisi lalu lintas komunikasi jaringan nirkabel IEEE 802.11 yang digunakan untuk proses analisis.
+   ```
+   wlan.fc.type_subtype == 0x08
+   ```
+
+3. Mengamati Association Request menggunakan filter:
+
+   ```
+   wlan.fc.type_subtype == 0
+   ```
+
+4. Mengamati Association Response menggunakan filter:
+
+   ```
+   wlan.fc.type_subtype == 1
+   ```
+
+5. Mengamati Data Frame menggunakan filter:
+
+   ```
+   wlan.fc.type_subtype == 0x20
+   ```
+
+6. Menganalisis informasi yang ditampilkan pada setiap frame IEEE 802.11.
 
 ---
 
-### 2. Analisis Beacon Frame
+## 1. Analisis Beacon Frame
 
 Filter yang digunakan:
 
@@ -28,17 +57,24 @@ Filter yang digunakan:
 wlan.fc.type_subtype == 0x08
 ```
 
-Beacon Frame digunakan oleh Access Point untuk mengumumkan keberadaan jaringan WiFi kepada perangkat di sekitarnya. Frame ini berisi informasi penting seperti SSID, channel, capability information, dan parameter jaringan lainnya.
+Beacon Frame merupakan frame yang dikirim secara periodik oleh Access Point untuk mengumumkan keberadaan jaringan WiFi kepada perangkat di sekitarnya.
 
-Screenshot:
+Berikut tampilan Beacon Frame:
+
+(assets/wifi_beacon_frame.png)
 
 ![Beacon Frame](assets/wifi_beacon_frame.png)
 
-Hasil pengamatan menunjukkan bahwa Access Point secara periodik mengirimkan Beacon Frame dengan informasi identitas jaringan yang dapat dideteksi oleh perangkat klien.
+### Analisis
+
+- Beacon Frame dikirim oleh Access Point.
+- Beacon berisi informasi SSID jaringan.
+- Beacon digunakan perangkat klien untuk menemukan jaringan WiFi yang tersedia.
+- Beacon dikirim secara berkala selama Access Point aktif.
 
 ---
 
-### 3. Analisis Association Request
+## 2. Analisis Association Request
 
 Filter yang digunakan:
 
@@ -46,17 +82,24 @@ Filter yang digunakan:
 wlan.fc.type_subtype == 0
 ```
 
-Association Request dikirimkan oleh Station (STA) kepada Access Point untuk meminta izin bergabung ke jaringan WiFi setelah proses scanning dan autentikasi selesai dilakukan.
+Association Request dikirim oleh perangkat klien kepada Access Point untuk meminta bergabung ke jaringan WiFi.
 
-Screenshot:
+Berikut tampilan Association Request:
+
+(assets/wifi_association_request.png)
 
 ![Association Request](assets/wifi_association_request.png)
 
-Pada hasil capture terlihat frame bertipe Association Request yang dikirim oleh perangkat klien menuju Access Point. Frame ini berisi informasi kemampuan perangkat dan SSID yang ingin diakses.
+### Analisis
+
+- Association Request berasal dari perangkat klien.
+- Frame ini berisi kemampuan perangkat yang akan bergabung ke jaringan.
+- Klien mengirimkan permintaan asosiasi kepada Access Point.
+- Proses ini dilakukan sebelum komunikasi data berlangsung.
 
 ---
 
-### 4. Analisis Association Response
+## 3. Analisis Association Response
 
 Filter yang digunakan:
 
@@ -64,17 +107,24 @@ Filter yang digunakan:
 wlan.fc.type_subtype == 1
 ```
 
-Association Response merupakan balasan dari Access Point terhadap Association Request yang dikirim oleh klien. Frame ini menentukan apakah permintaan asosiasi diterima atau ditolak.
+Association Response merupakan balasan dari Access Point terhadap Association Request yang dikirimkan oleh klien.
 
-Screenshot:
+Berikut tampilan Association Response:
+
+(assets/wifi_association_response.png)
 
 ![Association Response](assets/wifi_association_response.png)
 
-Hasil pengamatan menunjukkan Access Point mengirimkan Association Response kepada perangkat klien sebagai konfirmasi bahwa proses asosiasi berhasil dilakukan.
+### Analisis
+
+- Association Response dikirim oleh Access Point.
+- Frame ini menunjukkan hasil dari permintaan asosiasi klien.
+- Jika berhasil, perangkat dapat mulai berkomunikasi pada jaringan.
+- Association Response menjadi tanda bahwa klien telah diterima oleh Access Point.
 
 ---
 
-### 5. Analisis Data Frame
+## 4. Analisis Data Frame
 
 Filter yang digunakan:
 
@@ -82,42 +132,42 @@ Filter yang digunakan:
 wlan.fc.type_subtype == 0x20
 ```
 
-Data Frame digunakan untuk membawa payload data antara perangkat klien dan Access Point. Jenis frame ini merupakan frame yang paling sering muncul selama komunikasi normal berlangsung.
+Data Frame digunakan untuk membawa data aktual antara perangkat klien dan Access Point.
 
-Screenshot:
+Berikut tampilan Data Frame:
+
+(assets/wifi_data_frame.png)
 
 ![Data Frame](assets/wifi_data_frame.png)
 
-Pada hasil capture terlihat frame bertipe Data Frame dengan nilai:
+### Analisis
+
+Hasil capture menunjukkan:
 
 ```text
 Type = Data frame (2)
 Subtype = Data (0)
 ```
 
-Hal ini menunjukkan bahwa frame tersebut digunakan untuk mengirimkan data aktual pada jaringan WiFi.
+Interpretasi:
 
----
-
-## Analisis
-
-Berdasarkan hasil pengamatan, komunikasi pada jaringan IEEE 802.11 terdiri dari beberapa jenis frame yang memiliki fungsi berbeda.
-
-Beacon Frame digunakan Access Point untuk mengumumkan keberadaan jaringan. Setelah perangkat menemukan jaringan yang diinginkan, perangkat akan mengirimkan Association Request untuk meminta bergabung ke jaringan tersebut. Access Point kemudian memberikan Association Response sebagai konfirmasi keberhasilan proses asosiasi.
-
-Setelah proses asosiasi berhasil, komunikasi data dilakukan menggunakan Data Frame. Frame inilah yang membawa informasi aktual yang dipertukarkan antara klien dan Access Point selama koneksi berlangsung.
-
-Dengan menggunakan Wireshark, struktur dan fungsi masing-masing frame IEEE 802.11 dapat diamati secara langsung sehingga memudahkan pemahaman mengenai mekanisme kerja jaringan nirkabel.
+- Frame termasuk kategori Data Frame.
+- Data Frame digunakan untuk membawa payload data pengguna.
+- Setelah proses asosiasi berhasil, komunikasi berlangsung menggunakan Data Frame.
+- Frame ini merupakan frame utama yang digunakan selama koneksi WiFi aktif.
 
 ---
 
 ## Kesimpulan
 
-1. IEEE 802.11 menggunakan berbagai jenis frame untuk mengatur komunikasi jaringan nirkabel.
-2. Beacon Frame digunakan untuk mengumumkan informasi jaringan WiFi kepada perangkat di sekitarnya.
-3. Association Request dikirim oleh klien untuk meminta bergabung ke jaringan.
-4. Association Response digunakan Access Point untuk mengonfirmasi proses asosiasi.
-5. Data Frame digunakan untuk membawa payload data selama komunikasi berlangsung.
-6. Wireshark dapat digunakan untuk mengidentifikasi dan menganalisis setiap jenis frame IEEE 802.11 secara detail.
+Pada praktikum ini dilakukan analisis terhadap beberapa jenis frame IEEE 802.11 menggunakan Wireshark.
 
----
+Hasil menunjukkan bahwa:
+
+- Beacon Frame digunakan untuk mengumumkan keberadaan jaringan WiFi.
+- Association Request digunakan klien untuk meminta bergabung ke jaringan.
+- Association Response digunakan Access Point untuk memberikan konfirmasi asosiasi.
+- Data Frame digunakan untuk mengirimkan data aktual selama komunikasi berlangsung.
+- IEEE 802.11 menggunakan berbagai jenis frame untuk mengatur komunikasi antara perangkat klien dan Access Point.
+
+Praktikum berhasil dijalankan dan seluruh jenis frame dapat diamati menggunakan Wireshark.
